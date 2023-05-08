@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.linkedinclone.R
+import com.example.linkedinclone.databinding.PostFullComponentViewBinding
 import com.example.linkedinclone.databinding.PostRecyclerViewBinding
 import com.example.linkedinclone.main.model.PostModel
+import com.example.linkedinclone.utils.Extensions.createBottomSheet
 import com.example.linkedinclone.utils.Extensions.loadImage
+import com.example.linkedinclone.utils.Extensions.showBottomSheet
 
 class PostAdapter(private var list: List<PostModel>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     inner class PostViewHolder(private val binding: PostRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -32,6 +35,18 @@ class PostAdapter(private var list: List<PostModel>) : RecyclerView.Adapter<Post
                             .load(if (i == 0) R.drawable.test_image else R.drawable.abstract_image)
                             .into(if (i == 0) imageOne else imageTwo)
                     }
+                }
+
+                root.setOnClickListener {
+                    val dialogBinding = PostFullComponentViewBinding.inflate(LayoutInflater.from(it.context), it as ViewGroup, false)
+                    val bottomSheet = it.context.createBottomSheet(dialogBinding.root, fullHeight = true)
+                    dialogBinding.apply {
+                        userImage.loadImage(R.drawable.abstract_image)
+                        singleImage.apply {
+                            singleImage.loadImage(R.drawable.test_image)
+                        }
+                    }
+                    it.context.showBottomSheet(bottomSheet)
                 }
 
             }
