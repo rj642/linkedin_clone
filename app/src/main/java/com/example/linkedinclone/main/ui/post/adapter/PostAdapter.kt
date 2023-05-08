@@ -8,12 +8,27 @@ import com.bumptech.glide.Glide
 import com.example.linkedinclone.R
 import com.example.linkedinclone.databinding.PostFullComponentViewBinding
 import com.example.linkedinclone.databinding.PostRecyclerViewBinding
+import com.example.linkedinclone.main.model.CommentData
 import com.example.linkedinclone.main.model.PostModel
+import com.example.linkedinclone.main.ui.post.PostFragment
 import com.example.linkedinclone.utils.Extensions.createBottomSheet
 import com.example.linkedinclone.utils.Extensions.loadImage
 import com.example.linkedinclone.utils.Extensions.showBottomSheet
 
 class PostAdapter(private var list: List<PostModel>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+
+    var commentData = mutableListOf<CommentData>()
+
+    private lateinit var adapter: CommentAdapter
+
+    init {
+        val profileData = PostFragment.profileData
+        for (i in 0..100) {
+            commentData.add(CommentData(userData = profileData, commentData="Hey there it's me $i",))
+        }
+        adapter = CommentAdapter(commentData)
+    }
+
     inner class PostViewHolder(private val binding: PostRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PostModel, pos: Int) {
             binding.apply {
@@ -46,6 +61,7 @@ class PostAdapter(private var list: List<PostModel>) : RecyclerView.Adapter<Post
                         singleImage.apply {
                             singleImage.loadImage(R.drawable.test_image)
                         }
+                        commentRecyclerView.adapter = adapter
                     }
                     it.context.showBottomSheet(bottomSheet)
                 }

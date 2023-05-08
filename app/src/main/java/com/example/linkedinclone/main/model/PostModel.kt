@@ -39,9 +39,9 @@ data class CommentData(
     @JvmField
     var commentData: String,
     @JvmField
-    var reactionCount: Int,
+    var reactionCount: Int = 0,
     @JvmField
-    var reactionFromConnection: List<ProfileData>
+    var reactionFromConnection: List<ProfileData> = emptyList()
 ) : Parcelable {
 
 }
