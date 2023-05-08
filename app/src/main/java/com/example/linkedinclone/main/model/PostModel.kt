@@ -10,7 +10,6 @@ enum class Reaction {
     CELEBRATE, // 4
     SUPPORT // 5
 }
-
 @Parcelize
 data class PostModel(
     @JvmField
