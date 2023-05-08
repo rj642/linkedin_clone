@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.linkedinclone.R
 import com.example.linkedinclone.databinding.CommentRecyclerViewBinding
-import com.example.linkedinclone.databinding.PostFullComponentViewBinding
 import com.example.linkedinclone.main.model.CommentData
 import com.example.linkedinclone.utils.Extensions.loadImage
 
