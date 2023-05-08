@@ -18,7 +18,6 @@ class MessageActivity : AppCompatActivity() {
     private val messageList = mutableListOf<MessageModel>()
 
     private lateinit var adapter: MessageListAdapter
-
     init {
         val messageData = MessageData("rj_b", message = listOf(ContentInfo(message="This is a new message", timestamp=(System.currentTimeMillis() / 1000L), read=true)))
         for (i in 0..100) {
@@ -55,6 +54,10 @@ class MessageActivity : AppCompatActivity() {
             it.setDisplayShowTitleEnabled(false)
             it.setDisplayHomeAsUpEnabled(false)
         }
+    }
+
+    private fun handleBackClick() {
+
     }
 
 }

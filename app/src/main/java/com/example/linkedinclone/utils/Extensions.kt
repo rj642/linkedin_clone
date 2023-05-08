@@ -5,10 +5,12 @@ import android.app.Dialog
 import android.content.Context
 import android.content.res.Configuration
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -85,22 +87,20 @@ object Extensions {
         dialog.show()
     }
 
-    // Use this ext. function under activity class
-    @JvmStatic
-    fun Activity.logs(message: String) {
-        Log.d("ACTIVITY:: ", message)
-    }
-
-    // Use this ext. function under fragment class
-    @JvmStatic
-    fun Fragment.logs(message: String) {
-        Log.d("FRAGMENT:: ", message)
-    }
-
     // Use this ext. function with any context
     @JvmStatic
     fun Context.logs(message: String) {
         Log.d("CONTEXT:: ", message)
+    }
+
+    // Create a toast along with gravity
+    @JvmStatic
+    fun Context.toast(message: String) {
+        val toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
+        toast.let {
+            it.setGravity(Gravity.BOTTOM, 0, -10)
+            it.show()
+        }
     }
 
 }

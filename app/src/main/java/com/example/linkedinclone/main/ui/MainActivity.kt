@@ -3,6 +3,7 @@ package com.example.linkedinclone.main.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
@@ -13,6 +14,8 @@ import com.example.linkedinclone.R
 import com.example.linkedinclone.databinding.ActivityMainBinding
 import com.example.linkedinclone.main.viewmodel.MainViewModel
 import com.example.linkedinclone.messages.ui.MessageActivity
+import com.example.linkedinclone.utils.Extensions.logs
+import com.example.linkedinclone.utils.Extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 //@AndroidEntryPoint
@@ -21,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -51,6 +53,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity, MessageActivity::class.java))
             }
 
+            /**
+             * Instead of overriding onBackPressed() method we'll simply use the below method to override it
+             */
+            onBackPressedDispatcher.addCallback {
+                handleBackPress()
+            }
+
         }
 
     }
@@ -62,4 +71,9 @@ class MainActivity : AppCompatActivity() {
             it.setDisplayShowTitleEnabled(false)
         }
     }
+
+    private fun handleBackPress() {
+        toast("Press once again to exit")
+    }
+
 }
