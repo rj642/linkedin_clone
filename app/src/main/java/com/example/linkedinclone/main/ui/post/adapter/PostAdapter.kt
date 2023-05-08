@@ -42,6 +42,7 @@ class PostAdapter(private var list: List<PostModel>) : RecyclerView.Adapter<Post
                     val bottomSheet = it.context.createBottomSheet(dialogBinding.root, fullHeight = true)
                     dialogBinding.apply {
                         userImage.loadImage(R.drawable.abstract_image)
+                        singleImage.root.visibility = View.VISIBLE
                         singleImage.apply {
                             singleImage.loadImage(R.drawable.test_image)
                         }
