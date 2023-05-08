@@ -7,15 +7,15 @@ import com.bumptech.glide.Glide
 import com.example.linkedinclone.R
 import com.example.linkedinclone.databinding.AddUserRecyclerViewBinding
 import com.example.linkedinclone.main.model.ProfileData
+import com.example.linkedinclone.utils.Extensions.loadImage
 
 class PeopleListAdapter(var list: List<ProfileData>) : RecyclerView.Adapter<PeopleListAdapter.PeopleViewHolder>() {
 
     inner class PeopleViewHolder(private val binding: AddUserRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ProfileData) {
             binding.apply {
-                Glide.with(userImage)
-                    .load(R.drawable.abstract_image)
-                    .into(userImage)
+                userImage.loadImage(R.drawable.test_image)
+                userFullName.text = item.fullName
             }
         }
     }
