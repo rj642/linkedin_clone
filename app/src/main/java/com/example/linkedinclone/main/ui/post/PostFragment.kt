@@ -84,7 +84,7 @@ class PostFragment : Fragment() {
             it?.let {
                 // capture response here and update UI
                 binding.apply {
-                    adapter = PostAdapter(it.posts)
+                    adapter = PostAdapter(it.posts, viewModel.userData.value)
 
                     postRecyclerView.adapter = adapter
                 }

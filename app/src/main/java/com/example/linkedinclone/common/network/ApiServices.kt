@@ -13,7 +13,7 @@ interface ApiServices {
     @GET("products")
     suspend fun getAllProducts(): Response<Map<String, Any>>
 
-    @GET("users?limit=11")
+    @GET("users?skip=12&limit=50")
     suspend fun getAllUsers(): Response<UserModel>
 
 }

@@ -3,16 +3,21 @@ package com.example.linkedinclone.main.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.ui.input.key.Key
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.linkedinclone.R
 import com.example.linkedinclone.databinding.ActivityMainBinding
+import com.example.linkedinclone.main.interfaces.CustomToolbarActionInterface
 import com.example.linkedinclone.main.interfaces.LoaderInterface
+import com.example.linkedinclone.main.model.SearchType
 import com.example.linkedinclone.main.viewmodel.MainViewModel
 import com.example.linkedinclone.messages.ui.MessageActivity
 import com.example.linkedinclone.utils.Extensions.logs
@@ -22,7 +27,7 @@ import com.example.linkedinclone.utils.Extensions.viewEnabled
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), LoaderInterface {
+class MainActivity : AppCompatActivity(), LoaderInterface, CustomToolbarActionInterface {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -101,6 +106,30 @@ class MainActivity : AppCompatActivity(), LoaderInterface {
             binding.apply {
                 progressBar.viewEnabled(false)
                 root.showSnackBar("Some error has occurred")
+            }
+        }
+    }
+
+    override fun searchFor(type: SearchType) {
+        when (type) {
+            SearchType.HOME -> {
+
+            }
+            SearchType.NETWORK -> {
+                if (this@MainActivity::binding.isInitialized) {
+                    binding.search.doOnTextChanged { text, _, _, _ ->
+                        viewModel.filterUserList(text.toString().trim())
+                    }
+                }
+            }
+            SearchType.POST -> {
+
+            }
+            SearchType.NOTIFICATION -> {
+
+            }
+            SearchType.JOBS -> {
+
             }
         }
     }

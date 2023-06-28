@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.example.linkedinclone.R
 import com.example.linkedinclone.databinding.FragmentMyNetworkBinding
+import com.example.linkedinclone.main.WrapperGridLayout
+import com.example.linkedinclone.main.interfaces.CustomToolbarActionInterface
 import com.example.linkedinclone.main.interfaces.LoaderInterface
 import com.example.linkedinclone.main.model.ProfileData
 import com.example.linkedinclone.main.model.RESPONSE
+import com.example.linkedinclone.main.model.SearchType
 import com.example.linkedinclone.main.ui.MainActivity
 import com.example.linkedinclone.main.ui.mynetwork.adapter.PeopleListAdapter
 import com.example.linkedinclone.main.ui.post.PostFragment
@@ -30,16 +34,25 @@ class MyNetworkFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
 
+    private var searchListener: CustomToolbarActionInterface? = null
+
     private var mListener: LoaderInterface? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mListener = context as? MainActivity
+        searchListener = context as? MainActivity
     }
 
     override fun onDetach() {
         super.onDetach()
         mListener = null
+        searchListener = null
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        searchListener?.searchFor(SearchType.NETWORK)
     }
 
     override fun onCreateView(
@@ -76,13 +89,20 @@ class MyNetworkFragment : Fragment() {
             }
         }
 
+        viewModel._refAllUsers.observe(viewLifecycleOwner) {
+            it?.let {
+                adapter = PeopleListAdapter(it)
+
+                binding.peopleRecyclerView.adapter = adapter
+                binding.peopleRecyclerView.layoutManager = WrapperGridLayout(2, RecyclerView.VERTICAL)
+            }
+        }
+
         viewModel.allUser.observe(viewLifecycleOwner) {
             requireContext().logs("I was called and updated with $it")
             it?.let {
-                binding.apply {
-                    adapter = PeopleListAdapter(it.users)
-
-                    peopleRecyclerView.adapter = adapter
+                if (this::adapter.isInitialized) {
+                    adapter.updateList(it)
                 }
             }
         }
