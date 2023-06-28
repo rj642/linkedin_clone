@@ -30,6 +30,7 @@ class PeopleListAdapter(
                 userImage.loadImageUrl(item.image)
                 userFullName.text = "${item.firstName} ${item.lastName}"
                 userBio.text = item.company.title
+
                 connectButton.setOnClickListener {
                     it.context.toast("Connection request sent to ${item.firstName}")
                     it.background =
@@ -37,6 +38,7 @@ class PeopleListAdapter(
                     (it as TextView).text = "Sent"
                     it.setTextColor(Color.parseColor("#4CAF50"))
                 }
+
                 root.setOnClickListener {
                     val dialogBinding = AddUserRecyclerViewBinding.inflate(
                         LayoutInflater.from(it.context),

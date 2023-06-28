@@ -24,11 +24,17 @@ class MainViewModel @Inject constructor(private val repo: DummyJsonRepo) : ViewM
 
     private val _allUsers = MutableLiveData<List<Users>>()
 
-    val _refAllUsers = MutableLiveData<List<Users>>()
+    private val _refAllUsers = MutableLiveData<List<Users>>()
 
     private val _postsLoading = MutableLiveData<RESPONSE>()
 
     private val _usersLoading = MutableLiveData<RESPONSE>()
+
+    private val _homeLoading = MutableLiveData<RESPONSE>()
+
+    private val _jobsLoading = MutableLiveData<RESPONSE>()
+
+    private val _notificationLoading = MutableLiveData<RESPONSE>()
 
     private val _userData = MutableLiveData<List<Map<Int, String>>>()
 
@@ -49,9 +55,24 @@ class MainViewModel @Inject constructor(private val repo: DummyJsonRepo) : ViewM
     val usersLoading
         get() = _usersLoading
 
+    val refAllUsers
+        get() = _refAllUsers
+
+    val homeLoading
+        get() = _homeLoading
+
+    val jobLoading
+        get() = _jobsLoading
+
+    val notificationLoading
+        get() = _notificationLoading
+
     init {
         _postsLoading.value = RESPONSE.IDLE
         _usersLoading.value = RESPONSE.IDLE
+        _notificationLoading.value = RESPONSE.IDLE
+        _homeLoading.value = RESPONSE.IDLE
+        _jobsLoading.value = RESPONSE.IDLE
         _userData.value = userDataRefList
         fetchAllPost()
         getAllUsers()

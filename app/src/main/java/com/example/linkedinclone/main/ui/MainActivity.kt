@@ -85,6 +85,12 @@ class MainActivity : AppCompatActivity(), LoaderInterface, CustomToolbarActionIn
         toast("Press once again to exit")
     }
 
+    override fun onIdle() {
+        if (this@MainActivity::binding.isInitialized) {
+            binding.progressBar.viewEnabled(false)
+        }
+    }
+
     override fun onLoad() {
         if (this@MainActivity::binding.isInitialized) {
             binding.apply {

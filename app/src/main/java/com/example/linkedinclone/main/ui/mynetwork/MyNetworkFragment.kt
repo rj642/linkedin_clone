@@ -68,7 +68,7 @@ class MyNetworkFragment : Fragment() {
                 when (it) {
                     RESPONSE.IDLE -> {
                         // Show idle behavior here
-
+                        mListener?.onIdle()
                     }
                     RESPONSE.LOADING -> {
                         // Show loader here
@@ -89,7 +89,7 @@ class MyNetworkFragment : Fragment() {
             }
         }
 
-        viewModel._refAllUsers.observe(viewLifecycleOwner) {
+        viewModel.refAllUsers.observe(viewLifecycleOwner) {
             it?.let {
                 adapter = PeopleListAdapter(it)
 
@@ -99,7 +99,6 @@ class MyNetworkFragment : Fragment() {
         }
 
         viewModel.allUser.observe(viewLifecycleOwner) {
-            requireContext().logs("I was called and updated with $it")
             it?.let {
                 if (this::adapter.isInitialized) {
                     adapter.updateList(it)

@@ -56,7 +56,7 @@ class PostFragment : Fragment() {
                 when (it) {
                     RESPONSE.IDLE -> {
                         // Handle the idle state here
-
+                        mListener?.onIdle()
                     }
                     RESPONSE.LOADING -> {
                         // Call interface method

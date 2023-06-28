@@ -4,6 +4,11 @@ interface LoaderInterface {
     // TODO: Implement these function in MainActivity
 
     /**
+     * @idle: This function will just hide the progress bar from activity
+     */
+    fun onIdle()
+
+    /**
      * @load: This function will handle loading status, implement the same in MainActivity
      */
     fun onLoad()
