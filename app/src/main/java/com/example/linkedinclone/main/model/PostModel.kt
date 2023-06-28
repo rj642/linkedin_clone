@@ -1,6 +1,8 @@
 package com.example.linkedinclone.main.model
 
 import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 enum class Reaction {
     LIKE, // 0
@@ -10,6 +12,31 @@ enum class Reaction {
     CELEBRATE, // 4
     SUPPORT // 5
 }
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class PostSchema(
+    @field:Json(name = "posts") val posts: List<UpdatedPostModel>,
+    @field:Json(name = "total") val total: Int,
+    @field:Json(name = "skip") val skip: Int,
+    @field:Json(name = "limit") val limit: Int
+) : Parcelable {
+
+}
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class UpdatedPostModel(
+    @field:Json(name = "id") val id: Int,
+    @field:Json(name = "title") val title: String,
+    @field:Json(name = "body") val body: String,
+    @field:Json(name = "userId") val userId: Int,
+    @field:Json(name = "tags") val tags: List<String>,
+    @field:Json(name = "reactions") val reaction: Int,
+) : Parcelable {
+
+}
+
 @Parcelize
 data class PostModel(
     @JvmField

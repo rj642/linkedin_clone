@@ -13,10 +13,14 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.example.linkedinclone.R
+import com.example.linkedinclone.common.MainApplication
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 object Extensions {
 
@@ -25,6 +29,13 @@ object Extensions {
     fun View.loadImage(drawable: Int, compress: Boolean = false) {
         Glide.with(this)
             .load(drawable)
+            .into(this as ImageView)
+    }
+
+    @JvmStatic
+    fun View.loadImageUrl(url: String) {
+        Glide.with(this)
+            .load(url)
             .into(this as ImageView)
     }
 
@@ -101,6 +112,29 @@ object Extensions {
             it.setGravity(Gravity.BOTTOM, 0, -10)
             it.show()
         }
+    }
+
+    @JvmStatic
+    fun log(message: String) {
+        MainApplication().context?.let {
+            Log.d(it.packageName, message)
+        }
+    }
+
+    @JvmStatic
+    fun View.viewEnabled(enabled: Boolean, addAlpha: Boolean = false) {
+        this.let {
+            it.visibility = if (enabled) View.VISIBLE else View.GONE
+            it.isEnabled = enabled
+            it.isClickable = enabled
+            it.alpha = if (addAlpha) 0.6f else 1.0f
+        }
+    }
+
+    @JvmStatic
+    fun View.showSnackBar(message: String) {
+        Snackbar.make(this, message, Snackbar.LENGTH_LONG)
+            .show()
     }
 
 }

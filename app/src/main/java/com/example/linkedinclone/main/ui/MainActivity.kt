@@ -12,18 +12,22 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.linkedinclone.R
 import com.example.linkedinclone.databinding.ActivityMainBinding
+import com.example.linkedinclone.main.interfaces.LoaderInterface
 import com.example.linkedinclone.main.viewmodel.MainViewModel
 import com.example.linkedinclone.messages.ui.MessageActivity
 import com.example.linkedinclone.utils.Extensions.logs
+import com.example.linkedinclone.utils.Extensions.showSnackBar
 import com.example.linkedinclone.utils.Extensions.toast
+import com.example.linkedinclone.utils.Extensions.viewEnabled
 import dagger.hilt.android.AndroidEntryPoint
 
-//@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), LoaderInterface {
 
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -74,6 +78,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleBackPress() {
         toast("Press once again to exit")
+    }
+
+    override fun onLoad() {
+        if (this@MainActivity::binding.isInitialized) {
+            binding.apply {
+                progressBar.viewEnabled(true)
+            }
+        }
+    }
+
+    override fun onSuccess() {
+        if (this@MainActivity::binding.isInitialized) {
+            binding.apply {
+                progressBar.viewEnabled(false)
+            }
+        }
+    }
+
+    override fun onFailed() {
+        if (this@MainActivity::binding.isInitialized) {
+            binding.apply {
+                progressBar.viewEnabled(false)
+                root.showSnackBar("Some error has occurred")
+            }
+        }
     }
 
 }

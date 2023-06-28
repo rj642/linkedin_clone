@@ -18,12 +18,7 @@ class MessageActivity : AppCompatActivity() {
     private val messageList = mutableListOf<MessageModel>()
 
     private lateinit var adapter: MessageListAdapter
-    init {
-        val messageData = MessageData("rj_b", message = listOf(ContentInfo(message="This is a new message", timestamp=(System.currentTimeMillis() / 1000L), read=true)))
-        for (i in 0..100) {
-            messageList.add(MessageModel(PostFragment.profileData, message = messageData))
-        }
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMessageBinding.inflate(layoutInflater)
